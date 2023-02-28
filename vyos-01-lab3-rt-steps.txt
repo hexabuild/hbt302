@@ -1,0 +1,51 @@
+# - hbt-302-lab3-rtr-steps.j2
+# - BOF
+# - Lab3 assignment step 1
+config
+# - change Vyos router system to do DHCPv6
+# - Note: Ethernet1 points to the Server network or 101, Ethernet4 points to the Client network or 201
+#
+# - Set up the DHCPv6 relay for the Vyos Router for the Client network
+#
+# - listen on this network interface on Vyos
+set service dhcpv6-relay listen-interface eth4 address '2001:db8:302:201::1'
+#
+# - relay the requests to this host
+set service dhcpv6-relay upstream-interface eth1 address '2001:db8:302:101::10'
+#
+# - turn on the managed flag
+set interfaces ethernet eth1 ipv6 router-advert managed-flag 'true'
+#
+# - you can optionally turn on the other flag - but you don't really need too - recommend leaving it off
+set interfaces ethernet eth1 ipv6 router-advert other-config-flag 'false'
+# set interfaces ethernet eth1 ipv6 router-advert other-config-flag 'true'
+#
+# - turn off the autonomous flag
+set interfaces ethernet eth1 ipv6 router-advert prefix 2001:db8:302:101::/64 autonomous-flag 'false'
+#
+# - advertise the new info out with an RA so hosts know that DHCPv6 is now enabled
+set interfaces ethernet eth1 ipv6 router-advert send-advert 'true'
+#
+#
+#
+# - optionally build out the same for the Server network
+# - you should be able to figure out how to do that on your own from the above...
+#
+#
+# - script for Vyos router to change from DHCPv6 to SLAAC for Client network, turn off M and O, and turn on A flag
+set interfaces ethernet eth1 ipv6 router-advert managed-flag 'false'
+set interfaces ethernet eth1 ipv6 router-advert other-config-flag 'false'
+set interfaces ethernet eth1 ipv6 router-advert prefix 2001:db8:302:101::/64 autonomous-flag 'true'
+#
+#
+# - script for vyos to run both DHCPv6 and SLAAC (what?!?) - turn on M, O, and A
+set interfaces ethernet eth1 ipv6 router-advert managed-flag 'true'
+set interfaces ethernet eth1 ipv6 router-advert other-config-flag 'true'
+set interfaces ethernet eth1 ipv6 router-advert prefix 2001:db8:302:101::/64 autonomous-flag 'true'
+#
+# - commit the configuration
+commit
+# - save the configuration
+save
+#
+# - EOF
