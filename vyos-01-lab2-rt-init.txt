@@ -1,0 +1,5 @@
+# - hbt-302-lab2-rtr-init.j2
+# - builds off hbt-302-lab1-rtr-int.j2 and hbt-302-lab1-rtr-steps.j2 by combining them
+# - BOF
+There is nothing different for the router in lab 2
+# - EOF

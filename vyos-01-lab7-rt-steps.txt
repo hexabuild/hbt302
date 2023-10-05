@@ -1,0 +1,27 @@
+# - hbt-302-lab7-rtr-steps.j2
+# - BOF
+# - Lab7 assignment
+config
+# - Turn on RA SLAAC on the Vyos router for the Client network with new prefixes
+# - Note: Ethernet1 points to the Server network or 101, Ethernet4 points to the Client network 201
+# - turn on a new random prefix
+set interfaces ethernet eth4 ipv6 router-advert prefix 2001:db8:302:abcd::/64 autonomous-flag 'true'
+# - turn on an additional random prefix
+set interfaces ethernet eth4 ipv6 router-advert prefix 2001:db8:302:cafe::/64 autonomous-flag 'true'
+#
+# - should you add the prefix to the interface?
+#
+# - Turn on RA DHCPv6 on the Vyos router for the Server network with new prefixes
+# - turn on a new random prefix
+set interfaces ethernet eth1 ipv6 router-advert prefix 2001:db8:302:1234::/64 autonomous-flag 'false'
+# - turn on an additional random prefix
+set interfaces ethernet eth1 ipv6 router-advert prefix 2001:db8:302:5678::/64 autonomous-flag 'true'
+#
+#
+#
+# - commit the configuration
+commit
+# - save the configuration
+save
+#
+# - EOF
