@@ -1,0 +1,40 @@
+# - hbt-302-lab2-windows-steps.j2
+# - BOF
+# - Lab2 assignments - Windows Server PowerShell Cmdlets for lab
+
+PowerShell commands for setting up IPv6 protocol basics on the OS:
+Get-NetIPv6Protocol
+Set-NetIPv6Protocol
+
+PowerShell commands for turning on and off privacy addressing (randomizing):
+Set-NetIPv6Protocol –RandomizeIdentifiers Disabled
+Set-NetIPv6Protocol –RandomizeIdentifiers Enabled
+
+PowerShell commands for getting and setting the routing information
+Get-NetRoute
+Set-NetRoute
+
+PowerShell commands for checking the network adapters:
+Get-NetAdapter 
+Set-NetAdapter 
+Disable-NetAdapter 
+Enable-NetAdapter 
+Rename-NetAdapter 
+Restart-NetAdapter
+
+PowerShell commands for IPv4 and IPv6:
+Get-NetIPInterface 
+Set-NetIPInterface 
+Get-NetIPAddress 
+New-NetIPAddress 
+Set-NetIPAddress 
+Remove-NetIPAddress 
+
+PowerShell commands for changing the Host OS DNS info:
+Get-DnsClientServerAddress 
+Set-DnsClientServerAddress
+Get-DnsClient
+Set-DnsClientServerAddress -ResetServerAddresses
+Get-DnsClient | Set-DnsClientServerAddress -ResetServerAddresses
+#
+# - EOF
