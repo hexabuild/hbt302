@@ -1,0 +1,90 @@
+# - hbt-302-lab1-rtr-int.j2
+# - BOF
+#
+config
+comment system host-name "Set host-name to vyos-01"
+set system host-name vyos-01
+#
+#
+set interfaces ethernet eth0 duplex 'auto'
+set interfaces ethernet eth0 address '172.16.1.2/24'
+set interfaces ethernet eth0 hw-id '50:01:00:02:00:00'
+set interfaces ethernet eth0 smp_affinity 'auto'
+set interfaces ethernet eth0 speed 'auto'
+#
+#
+set interfaces ethernet eth1 address '2001:db8:302:101::1/64'
+set interfaces ethernet eth1 duplex 'auto'
+set interfaces ethernet eth1 address '192.168.101.1/24'
+set interfaces ethernet eth1 ipv6 router-advert managed-flag 'false'
+set interfaces ethernet eth1 ipv6 router-advert max-interval '600'
+set interfaces ethernet eth1 ipv6 router-advert other-config-flag 'false'
+set interfaces ethernet eth1 ipv6 router-advert prefix 2001:db8:302:101::/64 autonomous-flag 'true'
+set interfaces ethernet eth1 ipv6 router-advert prefix 2001:db8:302:101::/64 on-link-flag 'true'
+set interfaces ethernet eth1 ipv6 router-advert prefix 2001:db8:302:101::/64 valid-lifetime '2592000'
+set interfaces ethernet eth1 ipv6 router-advert reachable-time '0'
+set interfaces ethernet eth1 ipv6 router-advert retrans-timer '0'
+set interfaces ethernet eth1 ipv6 router-advert send-advert 'true'
+set interfaces ethernet eth1 smp_affinity 'auto'
+set interfaces ethernet eth1 speed 'auto'
+#
+#
+set interfaces ethernet eth4 address '2001:db8:302:201::1/64'
+set interfaces ethernet eth4 duplex 'auto'
+set interfaces ethernet eth4 address '192.168.201.1/24'
+set interfaces ethernet eth4 ipv6 router-advert managed-flag 'false'
+set interfaces ethernet eth4 ipv6 router-advert max-interval '600'
+set interfaces ethernet eth4 ipv6 router-advert name-server '2001:db8:302:101::10'
+set interfaces ethernet eth4 ipv6 router-advert other-config-flag 'false'
+set interfaces ethernet eth4 ipv6 router-advert prefix 2001:db8:302:201::/64 autonomous-flag 'true'
+set interfaces ethernet eth4 ipv6 router-advert prefix 2001:db8:302:201::/64 on-link-flag 'true'
+set interfaces ethernet eth4 ipv6 router-advert prefix 2001:db8:302:201::/64 valid-lifetime '2592000'
+set interfaces ethernet eth4 ipv6 router-advert reachable-time '0'
+set interfaces ethernet eth4 ipv6 router-advert retrans-timer '0'
+set interfaces ethernet eth4 ipv6 router-advert send-advert 'true'
+set interfaces ethernet eth4 smp_affinity 'auto'
+set interfaces ethernet eth4 speed 'auto'
+#
+#
+set interfaces loopback 'lo'
+#
+set service dhcpv6-relay listen-interface 'eth4'
+set service dhcpv6-relay upstream-interface eth1 address '2001:db8:302:101::10'
+#
+set system config-management commit-revisions '20'
+set system console device ttyS0 speed '9600'
+#
+set system host-name 'vyos'
+set system login user vyos authentication encrypted-password '$1$Ko/B6Ilo$Cce8DIiw9ZYd3R0xQCACH1'
+set system login user vyos authentication plaintext-password ''
+set system login user vyos level 'admin'
+#
+set nat source rule 100 outbound-interface 'eth0'
+set nat source rule 100 source address '192.168.0.0/16'
+set nat source rule 100 translation address 'masquerade'
+#
+set service dhcp-server shared-network-name NET-CLIENT subnet 192.168.201.0/24 default-router '192.168.201.1'
+set service dhcp-server shared-network-name NET-CLIENT subnet 192.168.201.0/24 dns-server '8.8.8.8'
+set service dhcp-server shared-network-name NET-CLIENT subnet 192.168.201.0/24 domain-name 'example.com'
+set service dhcp-server shared-network-name NET-CLIENT subnet 192.168.201.0/24 start 192.168.201.10 stop '192.168.201.20'
+set service dhcp-server shared-network-name NET-SERV subnet 192.168.101.0/24 default-router '192.168.101.1'
+set service dhcp-server shared-network-name NET-SERV subnet 192.168.101.0/24 dns-server '8.8.8.8'
+set service dhcp-server shared-network-name NET-SERV subnet 192.168.101.0/24 domain-name 'example.com'
+set service dhcp-server shared-network-name NET-SERV subnet 192.168.101.0/24 start 192.168.101.10 stop '192.168.101.20'
+#
+set protocols static route 0.0.0.0/0 next-hop '172.16.1.1'
+#
+set system name-server '8.8.8.8'
+#
+set system ntp server '0.pool.ntp.org'
+set system ntp server '1.pool.ntp.org'
+set system ntp server '2.pool.ntp.org'
+#
+set system time-zone 'UTC'
+#
+#
+commit
+save
+#
+#
+# - EOF
