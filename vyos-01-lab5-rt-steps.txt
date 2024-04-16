@@ -1,0 +1,22 @@
+# - hbt-302-lab5-rtr-steps.j2
+# - BOF
+# - Lab5 assignment
+config
+# - Turn off RAs on the Vyos router for the Server network 
+# - Note: Ethernet1 points to the Server network or 101, Ethernet4 points to the Client network or 201
+#
+# - turn off the autonomous flag
+set interfaces ethernet eth1 ipv6 router-advert prefix 2001:db8:302:101::/64 autonomous-flag 'false'
+# - turn off the M and O flags
+set interfaces ethernet eth1 ipv6 router-advert send-advert 'false'
+set interfaces ethernet eth1 ipv6 router-advert managed-flag 'false'
+# - turn off advertising an RA
+set interfaces ethernet eth1 ipv6 router-advert send-advert 'false'
+#
+#
+# - commit the configuration
+commit
+# - save the configuration
+save
+#
+# - EOF
